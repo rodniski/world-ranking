@@ -5,6 +5,7 @@ embeddados via charts Datawrapper (datawrapper.dwcdn.net).  O endpoint
 `dataset.csv` do chart `Pv2kB` v9 ja vem com ISO3 e `GII score` para 138
 economias.  E a fonte de dados que o proprio site usa.
 """
+
 from __future__ import annotations
 
 import io
@@ -43,12 +44,14 @@ class GII(Collector):
                 f"GII: schema inesperado no Datawrapper; colunas: {df.columns.tolist()}"
             )
 
-        out = pd.DataFrame({
-            "iso3": df["ISO3"].astype(str).str.strip(),
-            "value": pd.to_numeric(df["GII score"], errors="coerce"),
-            "indicator_id": "gii_overall",
-            "year": 2025,
-        }).dropna(subset=["value"])
+        out = pd.DataFrame(
+            {
+                "iso3": df["ISO3"].astype(str).str.strip(),
+                "value": pd.to_numeric(df["GII score"], errors="coerce"),
+                "indicator_id": "gii_overall",
+                "year": 2025,
+            }
+        ).dropna(subset=["value"])
 
         out = out[out["iso3"].apply(is_in_scope)].reset_index(drop=True)
         return out[["iso3", "indicator_id", "value", "year"]]
