@@ -1,0 +1,54 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh issue:*)",
+      "Bash(gh pr:*)",
+      "Bash(gh repo view:*)",
+      "Bash(gh label:*)",
+      "Bash(gh api:*)",
+      "Bash(git checkout:*)",
+      "Bash(git switch:*)",
+      "Bash(git branch:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)",
+      "Bash(git fetch:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git status:*)",
+      "Bash(git stash:*)",
+      "Bash(git merge:*)",
+      "Bash(git rebase:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(pip:*)",
+      "Bash(pip3:*)",
+      "Bash(ruff:*)",
+      "Bash(pytest:*)",
+      "Bash(pyright:*)",
+      "Bash(mypy:*)",
+      "Bash(curl:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(find:*)",
+      "Bash(mkdir:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(wc:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "case \"$CLAUDE_FILE_PATH\" in *.py) cd /Users/gui/Documents/GitHub/world-ranking && ruff format \"$CLAUDE_FILE_PATH\" 2>/dev/null || true ;; esac"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,70 @@
+Metadata-Version: 2.4
+Name: country-innovation
+Version: 0.1.0
+Summary: Ranking de países por viabilidade de imigração para SWE BR (modos local + remoto)
+Author: Guilherme
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: pandas>=2.2
+Requires-Dist: numpy>=1.26
+Requires-Dist: requests>=2.32
+Requires-Dist: beautifulsoup4>=4.12
+Requires-Dist: lxml>=5.0
+Requires-Dist: pdfplumber>=0.11
+Requires-Dist: country-converter>=1.2
+Requires-Dist: scipy>=1.13
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: openpyxl>=3.1
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+Requires-Dist: ruff>=0.5; extra == "dev"
+
+# country-innovation
+
+Pipeline ETL + ranking de países pela viabilidade de imigração de SWE BR pleno→sênior.
+Modos suportados: local (você se muda) e remoto (você trabalha pra empregador estrangeiro e otimiza onde morar).
+
+## Setup
+
+```bash
+cd code
+python -m venv .venv && source .venv/bin/activate
+pip install -e .
+```
+
+Ou, sem instalar como pacote:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Rodar o pipeline
+
+```bash
+# 1. Coletar dados das fontes prioritárias
+python scripts/run_collectors.py
+
+# 2. Normalizar (z-score + clip + 0-100)
+python scripts/run_normalize.py
+
+# 3. Agregar e gerar countries.json
+python scripts/run_aggregate.py
+```
+
+Saída final: `../data/final/countries.json` (consumido pelo dashboard).
+
+## Estrutura
+
+```
+src/country_innovation/
+├── schema.py              schemas pandas pra raw/clean/final
+├── countries.py           ISO3 normalisation + 190-country whitelist
+├── collectors/            um módulo por fonte (gii, heritage, wb_ppp, ...)
+│   └── base.py            classe base Collector
+├── normalizers/           direção, z-score, clip, escala 0-100
+└── aggregator.py          dimensão → score final + gates
+```
+
+## Métodos
+
+Ver `../02_metodologia.md` na raiz do projeto.

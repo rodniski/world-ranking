@@ -9,6 +9,7 @@ tabela completa em HTML.  Estratégia:
 """
 from __future__ import annotations
 
+import io
 import logging
 import re
 
@@ -26,7 +27,16 @@ HEADERS = {
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) "
         "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
     ),
-    "Accept": "text/html,application/xhtml+xml",
+    "Accept": (
+        "text/html,application/xhtml+xml,application/xml;q=0.9,"
+        "image/avif,image/webp,*/*;q=0.8"
+    ),
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Referer": "https://www.heritage.org/index/",
+    "DNT": "1",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
 }
 
 
@@ -42,7 +52,7 @@ class Heritage(Collector):
         # Tentativa 1 — pandas
         tables = []
         try:
-            tables = pd.read_html(html)
+            tables = pd.read_html(io.StringIO(html), flavor="lxml")
         except ValueError:
             tables = []
 
