@@ -1,0 +1,11 @@
+# Pesos das 4 dimensoes no score final.
+# Default neutro (25% × 4) confirmado pelo Guilherme em 2026-05-04.
+# Devem somar ~1.0 (tolerancia 0.01).
+#
+# O dashboard expoe sliders e renormaliza no cliente — aqui eh so o
+# default usado pelo pipeline pra gerar countries.json.
+dimensions:
+  TECH: 0.25
+  VISA: 0.25
+  PPP: 0.25
+  MACRO: 0.25
