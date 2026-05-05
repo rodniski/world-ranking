@@ -26,6 +26,7 @@ from country_innovation.collectors.henley import HenleyPassport  # noqa: E402
 from country_innovation.collectors.heritage import Heritage  # noqa: E402
 from country_innovation.collectors.imf_weo import IMFWEO  # noqa: E402
 from country_innovation.collectors.numbeo import Numbeo  # noqa: E402
+from country_innovation.collectors.so_dev import StackOverflowSurvey  # noqa: E402
 from country_innovation.collectors.tax_rates import TaxRatesWiki  # noqa: E402
 from country_innovation.collectors.wb_ppp import WorldBankPPP  # noqa: E402
 from country_innovation.collectors.wb_wgi import WorldBankWGI  # noqa: E402
@@ -54,6 +55,7 @@ def main() -> int:
         EFEPIIndex(raw_dir=DATA_RAW),
         Numbeo(raw_dir=DATA_RAW),
         TaxRatesWiki(raw_dir=DATA_RAW),
+        StackOverflowSurvey(raw_dir=DATA_RAW),
     ]
     failures: list[tuple[str, Exception]] = []
     summary: list[tuple[str, int, int]] = []
